@@ -1,0 +1,227 @@
+<!-- 
+  <form id="loginForm">
+    <input type="text" id="studentId" placeholder="Student ID" required /><br><br>
+    <input type="password" id="password" placeholder="Password" required /><br><br>
+    <button type="submit">Login</button>
+  </form>
+
+  <div id="studentDetails" style="margin-top:20px;"></div> -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Booklytics</title>
+    <link rel="shortcut icon" href="assets/library.png" type="image/x-icon" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- navbar -->
+
+    <nav class="navbar navbar-expand-sm bg-black sticky-top py-1">
+      <div class="container navedit">
+        <a class="navbar-brand text-white fw-bold fs-4" href="#"
+          >Book<span class="fs-2 text-success">lytics</span></a
+        >
+        <button
+          class="bi bi-list d-lg-none d-md-none"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        ></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ms-auto me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="#" onclick="">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="books.html"
+                >Books</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="student.html" onclick="">Students</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="analytics.html">Analytics</a>
+            </li>
+          </ul>
+          <form
+            class="d-none d-md-flex"
+            onsubmit="goToPage(); return false;"
+            role="search"
+          >
+            <input
+              list="pages"
+              class="form-control me-2"
+              type="search"
+              placeholder="Search for books,students,analytics"
+              aria-label="Search"
+              id="pageSelect"
+            />
+            <datalist class="datalistedit" id="pages">
+              <option value="Books"></option>
+              <option value="Students"></option>
+              <option value="Analytics"></option>
+              <option value="Contact"></option>
+            </datalist>
+
+            <button class="btn btn-outline-success" type="submit">
+              Search
+            </button>
+          </form>
+        </div>
+      </div>
+    </nav>
+
+    <!-- navbar end -->
+    <!-- home hero section start -->
+    <section class="hero my-5">
+      <div class="container">
+        <div class="row gy-3">
+          <div class="col-sm-12 col-md-6 col-lg-6">
+            <h1 class="display-3 fw-bold">
+              Empowering <span class="text-success"> Smarter</span> Learning
+              Through Data
+            </h1>
+            <p class="fs-4">
+              At Library Insights, we believe that every book borrowed tells a
+              story. Our mission goes beyond tracking numbers — we help
+              institutions understand how students engage with knowledge. By
+              analyzing borrowing patterns, identifying underutilized
+              categories, and uncovering learning trends, we empower libraries
+              to make informed decisions that enhance access, efficiency, and
+              student success.
+            </p>
+          </div>
+          <div class="col-sm-12 col-md-6 col-lg-6 text-center">
+            <div class="loginForm">
+              <form id="loginForm" class="login-form">
+                <label>ENTER STUDENT ID</label>
+                <input
+                  class="inputbox1"
+                  type="text"
+                  id="studentId"
+                  placeholder="Student ID"
+                  required
+                /><br /><br />
+                <label>ENTER PASSWORD</label>
+                <input
+                  type="password"
+                  id="password"
+                  placeholder="Password"
+                  required
+                /><br /><br />
+                <button class="btn btn-outline-success" type="submit">
+                  Login
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- hero section end-->
+
+    <!-- footer start -->
+
+    <!-- footer section start -->
+    <footer class="footer p-4 border-top footer-txt">
+      <div class="container">
+        <!-- footer-navigation start -->
+        <div class="row">
+          <!-- col-1 -->
+          <div class="col-sm-12 col-md-3 col-lg-3">
+            <!-- brand-information -->
+            <a class="navbar-brand text-white fw-bold fs-4" href="#"
+              >Book<span class="fs-2 text-success">lytics</span></a
+            >
+
+            <!-- brand-title -->
+            <p class="text-lead text-capitalize mb-2">
+              With Book Usage Analytics, you can track how students engage with
+              your library collection. By understanding borrowing patterns and
+              popular categories, libraries can make data-driven decisions to
+              improve book availability, enhance student learning, and ensure
+              resources are effectively utilized.
+            </p>
+            <!-- social media icons -->
+            <div class="footer-social-icons my-3">
+              <i class="fs-4 p-2 border rounded bi bi-whatsapp"></i>
+              <i class="fs-4 p-2 border rounded bi bi-facebook"></i>
+              <i class="fs-4 p-2 border rounded bi bi-instagram"></i>
+              <i class="fs-4 p-2 border rounded bi bi-linkedin"></i>
+            </div>
+          </div>
+          <!-- col-2 -->
+          <div class="col-sm-12 col-md-3 col-lg-3">
+            <h4 class="fw-bold">Quick Links</h4>
+            <ul class="list-unstyled">
+              <li class="p-1">Home</li>
+              <li class="p-1">Books</li>
+              <li class="p-1">Students</li>
+              <li class="p-1">Analytics</li>
+              <li class="p-1">Contact</li>
+            </ul>
+          </div>
+          <!-- col-3 -->
+          <div class="col-sm-12 col-md-3 col-lg-3">
+            <h4 class="fw-bold">Services</h4>
+            <ul class="list-unstyled">
+              <li class="p-1">Insights & Reports</li>
+              <li class="p-1">Recommendations</li>
+              <li class="p-1">usage dashboard</li>
+              <li class="p-1">Visualizations</li>
+            </ul>
+          </div>
+          <!-- col-4 -->
+          <div class="col-sm-12 col-md-3 col-lg-3">
+            <h4 class="fw-bold">Get to know us</h4>
+            <ul class="list-unstyled">
+              <li class="p-1">About Booklytics</li>
+              <li class="p-1">Terms&Conditions</li>
+              <li class="p-1">Privacy Policy</li>
+
+              <li class="p-1">Careers</li>
+            </ul>
+          </div>
+        </div>
+        <hr class="border-top border-success border-2" />
+        <!-- footer-navigation end -->
+        <div class="text-center">
+          <p class="fs-6 fw-bold">
+            Copyright &copy; 2025 booklytics. All Right Reserved
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- footer end -->
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+
+    <script src="fetch.js"></script>
+  </body>
+</html>
