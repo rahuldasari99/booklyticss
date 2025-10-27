@@ -64,7 +64,7 @@ table {
     height:9rem;
     box-shadow: 0px 0px 10px 5px rgb(25, 135, 84);
     border-radius: 5px;
-    background-color: #d1e7dd;;
+    background-color: #d1e7dd;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -121,34 +121,38 @@ table {
 
 /* drag and drop css */
 
-.drop-zone {
-    border: 2px dashed #198754; border-radius: 12px;
-    padding: 50px; text-align: center; width: 400px;
-    background: rgba(209,231,221,0.5); transition: background 0.3s;
-  }
-  .drop-zone.hover { background: rgba(25,135,84,0.2); }
 
 
 
+ /* Login box */
+    .loginForm {
+      
+      padding: 40px 50px;
+      border-radius: 15px;
+      box-shadow: 0px 0px 10px 5px rgb(25, 135, 84);
+      text-align: center;
+    }
 
-  .loginForm{
-  
-    height: 20rem;
-    /* width: 40rem; */
-  
-  }
-.login-form{
+    /* Labels */
+    .login-form label {
+      display: block;
+      text-align: left;
+      font-weight: 600;
+      color: #2d3436;
+      margin-bottom: 5px;
+    }
+
+    /* Input boxes */
+    .login-form input {
+      width: 100%;
+      padding: 12px 15px;
+      margin-bottom: 20px;
+      border: 1px solid #b2bec3;
+      border-radius: 8px;
+      font-size: 15px;
+      transition: 0.3s ease;
+    }
+
+    
+
    
-   padding: 20px;
-   
-   /* width: 30rem; */
-   margin: auto;
-     box-shadow: 0px 0px 10px 5px rgb(25, 135, 84);
-     border-radius: 10px;
-     line-height: 2;
-
-}
-.login-form input{
-    background-color: transparent;
-    color: white;
-}

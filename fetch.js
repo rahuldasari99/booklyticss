@@ -1,42 +1,70 @@
-const supabaseUrl = 'https://zpdauvgblndbnpttzrbo.supabase.co'
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpwZGF1dmdibG5kYm5wdHR6cmJvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjEzOTQ0ODcsImV4cCI6MjA3Njk3MDQ4N30.NyVZQwCrXJELVPcwWDHYH4zrbN4b4Mq88hYMnNTmhLg'
-const tableName = 'library_usage'
+const supabaseUrl = 'https://pgnkoowjfxtsbxddipxk.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBnbmtvb3dqZnh0c2J4ZGRpcHhrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE1NTQ0MzIsImV4cCI6MjA3NzEzMDQzMn0.RPIClQMK14sVlNhmXji8YVO1hGp4Cnt3lwqrW4ym7xA';
 
- document.getElementById('loginForm').addEventListener('submit', async (e) => {
-      e.preventDefault()
+// Table names
+const studentTable = 'library_usage';
+const adminTable = 'admin_data';
 
-      const studentId = document.getElementById('studentId').value.toUpperCase();
-      const password = document.getElementById('password').value
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
 
-      const url = `${supabaseUrl}/rest/v1/${tableName}?select=*&Student_ID=eq.${encodeURIComponent(studentId)}&password=eq.${encodeURIComponent(password)}`
+  const studentId = document.getElementById('studentId').value.trim();
+  const password = document.getElementById('password').value.trim();
 
-      try {
-        const response = await fetch(url, {
-          method: 'GET',
-          headers: {
-            'apikey': supabaseKey,
-            'Authorization': `Bearer ${supabaseKey}`,
-            'Content-Type': 'application/json'
-          }
-        })
+  try {
+    // 1️⃣ Check if admin login
+    const adminUrl = `${supabaseUrl}/rest/v1/${adminTable}?select=*&admin_id=eq.${encodeURIComponent(studentId)}&admin_password=eq.${encodeURIComponent(password)}`;
+    console.log('Admin URL:', adminUrl)
 
-        if (!response.ok) throw new Error(`Server error: ${response.status}`)
-
-        const data = await response.json()
-
-        if (data.length === 0) {
-          alert('Invalid Student ID or Password!')
-        } else {
-          const student = data[0]
-
-          // 🧠 Save student data to localStorage
-          localStorage.setItem('studentData', JSON.stringify(student))
-
-          // 🚀 Redirect to dashboard
-          window.location.href = 'studentdashboard.html'
-        }
-      } catch (err) {
-        console.error('Error fetching data:', err)
-        alert('Something went wrong! Check console for details.')
+    const adminResponse = await fetch(adminUrl, {
+      method: 'GET',
+      headers: {
+        'apikey': supabaseKey,
+        'Authorization': `Bearer ${supabaseKey}`,
+        'Content-Type': 'application/json'
       }
-    })
+    });
+
+    if (!adminResponse.ok) throw new Error(`Admin fetch failed: ${adminResponse.status}`);
+
+    const adminData = await adminResponse.json();
+
+    if (adminData.length > 0) {
+      // ✅ Admin found
+      localStorage.setItem('adminData', JSON.stringify(adminData[0]));
+      alert('Admin login successful!');
+      window.location.href = 'admin.html';
+      return; // Stop here if admin logged in
+    }
+
+    // 2️⃣ Check if student login
+    const studentUrl = `${supabaseUrl}/rest/v1/${studentTable}?select=*&Student_ID=eq.${encodeURIComponent(studentId)}&password=eq.${encodeURIComponent(password)}`;
+
+    const studentResponse = await fetch(studentUrl, {
+      method: 'GET',
+      headers: {
+        'apikey': supabaseKey,
+        'Authorization': `Bearer ${supabaseKey}`,
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (!studentResponse.ok) throw new Error(`Student fetch failed: ${studentResponse.status}`);
+
+    const studentData = await studentResponse.json();
+
+    if (studentData.length > 0) {
+      // ✅ Student found
+      localStorage.setItem('studentData', JSON.stringify(studentData[0]));
+      alert('Student login successful!');
+      window.location.href = 'studentdashboard.html';
+    } else {
+      // ❌ No match found
+      alert('Invalid ID or Password!');
+    }
+
+  } catch (err) {
+    console.error('Error during login:', err);
+    alert('Something went wrong! Check console for details.');
+  }
+});
