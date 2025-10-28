@@ -14,7 +14,7 @@ const supabaseUrl = 'https://pgnkoowjfxtsbxddipxk.supabase.co'
         payBtn.style.display = 'none'
       } else {
         infoDiv.innerHTML = `
-          <h3>Welcome ${studentData.Student_Name}</h3>
+          <p><strong>Student Name</strong> ${studentData.Student_Name}</p>
           <p><strong>Student ID:</strong> ${studentData.Student_ID}</p>
           <p><strong>Department:</strong> ${studentData.Department}</p>
           <p><strong>Year:</strong> ${studentData.Year}</p>
