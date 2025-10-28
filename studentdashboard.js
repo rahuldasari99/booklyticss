@@ -1,5 +1,5 @@
-const supabaseUrl = 'https://zpdauvgblndbnpttzrbo.supabase.co'
-    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpwZGF1dmdibG5kYm5wdHR6cmJvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjEzOTQ0ODcsImV4cCI6MjA3Njk3MDQ4N30.NyVZQwCrXJELVPcwWDHYH4zrbN4b4Mq88hYMnNTmhLg'
+const supabaseUrl = 'https://pgnkoowjfxtsbxddipxk.supabase.co'
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBnbmtvb3dqZnh0c2J4ZGRpcHhrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE1NTQ0MzIsImV4cCI6MjA3NzEzMDQzMn0.RPIClQMK14sVlNhmXji8YVO1hGp4Cnt3lwqrW4ym7xA'
     const tableName = 'library_usage'
 
     // Read student data

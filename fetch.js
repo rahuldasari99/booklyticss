@@ -5,6 +5,7 @@ const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
 const studentTable = 'library_usage';
 const adminTable = 'admin_data';
 
+
 document.getElementById('loginForm').addEventListener('submit', async (e) => {
   e.preventDefault();
 
@@ -28,14 +29,27 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     if (!adminResponse.ok) throw new Error(`Admin fetch failed: ${adminResponse.status}`);
 
     const adminData = await adminResponse.json();
+    
 
-    if (adminData.length > 0) {
-      // ✅ Admin found
-      localStorage.setItem('adminData', JSON.stringify(adminData[0]));
-      alert('Admin login successful!');
-      window.location.href = 'admin.html';
-      return; // Stop here if admin logged in
-    }
+   
+    const messageDiv = document.getElementById('message');
+
+if (adminData.length > 0) {
+  // ✅ Student found
+  localStorage.setItem('adminData', JSON.stringify(adminData[0]));
+
+  // show success message on screen
+  messageDiv.textContent = 'Login successful! Redirecting...';
+  messageDiv.style.color = 'green';
+
+  // redirect after short delay
+  setTimeout(() => {
+    window.location.href = 'admin.html';
+  }, 1000);
+  return;
+
+} 
+
 
     // 2️⃣ Check if student login
     const studentUrl = `${supabaseUrl}/rest/v1/${studentTable}?select=*&Student_ID=eq.${encodeURIComponent(studentId)}&password=eq.${encodeURIComponent(password)}`;
@@ -53,15 +67,25 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
 
     const studentData = await studentResponse.json();
 
-    if (studentData.length > 0) {
-      // ✅ Student found
-      localStorage.setItem('studentData', JSON.stringify(studentData[0]));
-      alert('Student login successful!');
-      window.location.href = 'studentdashboard.html';
-    } else {
-      // ❌ No match found
-      alert('Invalid ID or Password!');
-    }
+    // const messageDiv = document.getElementById('message');
+
+if (studentData.length > 0) {
+  // ✅ Student found
+  localStorage.setItem('studentData', JSON.stringify(studentData[0]));
+
+  // show success message on screen
+  messageDiv.textContent = 'Login successful! Redirecting...';
+  messageDiv.style.color = 'green';
+
+  // redirect after short delay
+  setTimeout(() => {
+    window.location.href = 'studentdashboard.html';
+  }, 1000);
+return;
+} 
+// ❌ No match found
+  messageDiv.textContent = 'Invalid ID or Password!';
+  messageDiv.style.color = 'red';
 
   } catch (err) {
     console.error('Error during login:', err);
