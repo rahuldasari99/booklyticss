@@ -1,3 +1,18 @@
+
+// --- Access control: only student can open this page ---
+document.addEventListener("DOMContentLoaded", () => {
+  const studentData = localStorage.getItem("studentData");
+
+  // If no student is logged in, redirect to login page
+  if (!studentData) {
+    alert("Access denied! Student login required.");
+    window.location.href = "index.html"; // or your login page
+    return;
+  }
+});
+
+
+
 const supabaseUrl = 'https://pgnkoowjfxtsbxddipxk.supabase.co'
     const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBnbmtvb3dqZnh0c2J4ZGRpcHhrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE1NTQ0MzIsImV4cCI6MjA3NzEzMDQzMn0.RPIClQMK14sVlNhmXji8YVO1hGp4Cnt3lwqrW4ym7xA'
     const tableName = 'library_usage'
@@ -14,7 +29,7 @@ const supabaseUrl = 'https://pgnkoowjfxtsbxddipxk.supabase.co'
         payBtn.style.display = 'none'
       } else {
         infoDiv.innerHTML = `
-          <p><strong>Student Name</strong> ${studentData.Student_Name}</p>
+          <p><strong>Student Name:</strong> ${studentData.Student_Name}</p>
           <p><strong>Student ID:</strong> ${studentData.Student_ID}</p>
           <p><strong>Department:</strong> ${studentData.Department}</p>
           <p><strong>Year:</strong> ${studentData.Year}</p>

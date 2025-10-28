@@ -1,4 +1,3 @@
-
 // --- Access control: only admin can open this page ---
 document.addEventListener("DOMContentLoaded", () => {
   const adminData = localStorage.getItem("adminData");
@@ -12,14 +11,9 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 document.addEventListener("DOMContentLoaded", async () => {
-const supabaseUrl = 'https://pgnkoowjfxtsbxddipxk.supabase.co'
-    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBnbmtvb3dqZnh0c2J4ZGRpcHhrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE1NTQ0MzIsImV4cCI6MjA3NzEzMDQzMn0.RPIClQMK14sVlNhmXji8YVO1hGp4Cnt3lwqrW4ym7xA'
-    const tableName = 'library_usage'
-
-// --- Supabase Connection ---
-
-
- 
+  const supabaseUrl = 'https://pgnkoowjfxtsbxddipxk.supabase.co';
+  const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBnbmtvb3dqZnh0c2J4ZGRpcHhrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE1NTQ0MzIsImV4cCI6MjA3NzEzMDQzMn0.RPIClQMK14sVlNhmXji8YVO1hGp4Cnt3lwqrW4ym7xA';
+  const tableName = 'library_usage';
 
   // DOM elements
   const studentnameele = document.getElementById("ustudentname");
@@ -35,22 +29,44 @@ const supabaseUrl = 'https://pgnkoowjfxtsbxddipxk.supabase.co'
 
   let allStudents = [];
 
-  // Fetch data from Supabase
-  async function fetchStudentData() {
-    try {
+  // --- Fetch all rows from Supabase (beyond 1000 limit) ---
+  async function fetchAllRows() {
+    const allData = [];
+    let start = 0;
+    const limit = 1000;
+    let moreData = true;
+
+    while (moreData) {
       const res = await fetch(`${supabaseUrl}/rest/v1/${tableName}?select=*`, {
         headers: {
           apikey: supabaseKey,
           Authorization: `Bearer ${supabaseKey}`,
+          Range: `${start}-${start + limit - 1}`,
         },
       });
 
       if (!res.ok) throw new Error(`HTTP Error ${res.status}`);
-      const data = await res.json();
+      const batch = await res.json();
+      allData.push(...batch);
 
+      if (batch.length < limit) {
+        moreData = false; // No more data left
+      } else {
+        start += limit; // Fetch next batch
+      }
+    }
+
+    return allData;
+  }
+
+  // --- Main fetch function ---
+  async function fetchStudentData() {
+    try {
+      const data = await fetchAllRows();
       allStudents = data;
       populateFilters(allStudents);
       renderTable(allStudents);
+      console.log(`✅ Loaded ${allStudents.length} records.`);
     } catch (err) {
       console.error("Error loading data:", err);
     }
@@ -116,7 +132,7 @@ const supabaseUrl = 'https://pgnkoowjfxtsbxddipxk.supabase.co'
     const filtered = allStudents.filter(
       (s) =>
         s.Student_Name.toLowerCase().includes(term) ||
-        s.Student_ID.toString().includes(term) ||
+        s.Student_ID.toString().toLowerCase().includes(term) ||
         s.Department.toLowerCase().includes(term)
     );
 
@@ -184,11 +200,11 @@ const supabaseUrl = 'https://pgnkoowjfxtsbxddipxk.supabase.co'
   ratingFilter.addEventListener("change", applyFilters);
 
   // Initial load
-  
   fetchStudentData();
-  
 });
+
+// Logout
 function logout() {
-      localStorage.removeItem('adminData')
-      window.location.href = 'index.html'
-    }
+  localStorage.removeItem('adminData');
+  window.location.href = 'index.html';
+}
