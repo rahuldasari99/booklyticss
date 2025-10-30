@@ -18,7 +18,6 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
     />
     <link rel="stylesheet" href="style.css" />
-    
   </head>
   <body>
     <!-- navbar -->
@@ -35,58 +34,46 @@
         ></button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ms-auto me-auto mb-2 mb-lg-0">
-            
+            <li class="nav-item"><a class="nav-link" href="admin.html">Dashboard</a></li>
             <li class="nav-item"><a class="nav-link" href="booksforadmin.html">Books</a></li>
-            <li class="nav-item"><a class="nav-link" href="admin.html">Students</a></li>
-            <li class="nav-item"><a class="nav-link" href="analytics.html">Analytics</a></li>
+           
           </ul>
           <form id="searchForm" class="d-none d-md-flex" role="search">
             <input
               class="form-control me-2"
               type="search"
-              placeholder="Search for students"
+              placeholder="Search for books"
               aria-label="Search"
-              id="ustudentname"
+              id="ubookname"
             />
             <button class="btn btn-outline-success" type="submit" id="searchBtn">
               Search
             </button>
           </form>
-           <button class="btn btn-outline-danger mx-2" onclick="logout()">Logout</button>
         </div>
       </div>
     </nav>
     <!-- navbar end -->
 
-    <h1 class="text-center mt-4">Library Students Data</h1>
+    <h1 class="text-center mt-4">Library Books Data</h1>
     
-    <div class="table-responsive container my-4 table-edit">
-      
-        <div class="d-flex gap-3 mb-3 flex-wrap">
-          <span id="studentCount" class="badge bg-success fs-6">Total students: 0</span>
-        <span id="totalFine" class="badge bg-danger fs-6">Total fine: 0</span>
-  <select id="departmentFilter" class="form-select w-auto"></select>
-  <select id="yearFilter" class="form-select w-auto"></select>
+   
+    
+
+    <div class="table-responsive container my-4">
+      <div class="d-flex gap-3 mb-3">
   <select id="categoryFilter" class="form-select w-auto"></select>
   <select id="ratingFilter" class="form-select w-auto"></select>
-  <button id="resetFilters" class="btn btn-outline-secondary">Reset Filters</button>
 </div>
 
-
-
+       <span id="bookCount" class="badge bg-success fs-6">Total Books: 0</span>
       <table id="studentTable" class="table table-striped table-bordered">
         <thead class="table-success">
           <tr>
-            <th>Student ID</th>
-            <th>Name</th>
-            <th>Department</th>
-            <th>Year</th>
+           
             <th>Book Title</th>
             <th>Category</th>
-            <th>Borrow Date</th>
-            <th>Return Date</th>
-            <th>Days Borrowed</th>
-            <th>Fine (₹)</th>
+           
             <th>Rating</th>
           </tr>
         </thead>
@@ -95,6 +82,6 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="admin.js"></script>
+    <script src="books.js"></script>
   </body>
 </html>
