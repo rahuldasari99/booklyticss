@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     let moreData = true;
 
     while (moreData) {
-      const res = await fetch(`${supabaseUrl}/rest/v1/${tableName}?select=Student_ID,Department,Category,Year,Fine_Amount,Days_Borrowed`, {
+      const res = await fetch(`${supabaseUrl}/rest/v1/${tableName}?select=Student_ID,Book_Title,Department,Category,Year,Fine_Amount,Days_Borrowed`, {
         headers: {
           apikey: supabaseKey,
           Authorization: `Bearer ${supabaseKey}`,
@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       loader.style.display = "none";
       console.log(`✅ Loaded ${data.length} records.`);
       createCharts(data);
-      showSummary(data);
+     
     } catch (err) {
       loader.innerText = "❌ Failed to load data.";
       console.error(err);
