@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const tableName = 'library_usage';
 
   // DOM elements
+  const loader = document.getElementById("loader");
   const studentnameele = document.getElementById("ustudentname");
   const searchForm = document.getElementById("searchForm");
   const studentCount = document.getElementById("studentCount");
@@ -29,39 +30,31 @@ document.addEventListener("DOMContentLoaded", async () => {
   let allStudents = [];
 
   // --- Fetch all rows from Supabase (beyond 1000 limit) ---
-  async function fetchAllRows() {
-    const allData = [];
-    let start = 0;
-    const limit = 1000;
-    let moreData = true;
+  async function fetchAllRowsParallel() {
+  const limit = 1000;
+  const totalEstimate = 10000; // estimate your total rows
+  const batchCount = Math.ceil(totalEstimate / limit);
+  
+  const requests = Array.from({ length: batchCount }, (_, i) =>
+    fetch(`${supabaseUrl}/rest/v1/${tableName}?select=*`, {
+      headers: {
+        apikey: supabaseKey,
+        Authorization: `Bearer ${supabaseKey}`,
+        Range: `${i * limit}-${(i + 1) * limit - 1}`,
+      },
+    }).then(res => res.ok ? res.json() : [])
+  );
 
-    while (moreData) {
-      const res = await fetch(`${supabaseUrl}/rest/v1/${tableName}?select=*`, {
-        headers: {
-          apikey: supabaseKey,
-          Authorization: `Bearer ${supabaseKey}`,
-          Range: `${start}-${start + limit - 1}`,
-        },
-      });
-
-      if (!res.ok) throw new Error(`HTTP Error ${res.status}`);
-      const batch = await res.json();
-      allData.push(...batch);
-
-      if (batch.length < limit) {
-        moreData = false; // No more data left
-      } else {
-        start += limit; // Fetch next batch
-      }
-    }
-
-    return allData;
-  }
+  const results = await Promise.all(requests);
+  return results.flat();
+}
 
   // --- Main fetch function ---
   async function fetchStudentData() {
     try {
-      const data = await fetchAllRows();
+        loader.innerText = "Loading data from database...";
+      const data = await fetchAllRowsParallel();
+       loader.style.display = "none";
       allStudents = data;
       populateFilters(allStudents);
       renderTable(allStudents);
@@ -70,6 +63,18 @@ document.addEventListener("DOMContentLoaded", async () => {
       console.error("Error loading data:", err);
     }
   }
+  // async function init() {
+  //   try {
+  //     loader.innerText = "Fetching data from Supabase...";
+  //     const data = await fetchAllRows();
+  //     loader.style.display = "none";
+  //     console.log(`✅ Loaded ${data.length} records.`);
+  //     createCharts(data);
+  //   } catch (err) {
+  //     loader.innerText = "❌ Failed to load data.";
+  //     console.error(err);
+  //   }
+  // }
 
   // Populate dropdown filters dynamically
   function populateFilters(students) {

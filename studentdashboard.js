@@ -59,7 +59,7 @@ const supabaseUrl = 'https://pgnkoowjfxtsbxddipxk.supabase.co'
       const amountInPaise = studentData.Fine_Amount * 100
 
       const options = {
-        key: "rzp_test_GtnqBgiVWYD6lk", // replace with your Razorpay key
+        key: "rzp_test_RZiyLx8tDkY0FA", // replace with your Razorpay key
         amount: amountInPaise,
         currency: "INR",
         name: "Library Fine Payment",
