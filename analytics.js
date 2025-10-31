@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     let moreData = true;
 
     while (moreData) {
-      const res = await fetch(`${supabaseUrl}/rest/v1/${tableName}?select=Student_ID,Department,Category,Year,Fine_Amount,Days_Borrowed`, {
+      const res = await fetch(`${supabaseUrl}/rest/v1/${tableName}?select=Student_ID,Department,Category,Book_Title,Year,Fine_Amount,Rating,Days_Borrowed`, {
         headers: {
           apikey: supabaseKey,
           Authorization: `Bearer ${supabaseKey}`,
