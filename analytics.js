@@ -2,15 +2,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   const supabaseUrl = 'https://pgnkoowjfxtsbxddipxk.supabase.co';
   const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBnbmtvb3dqZnh0c2J4ZGRpcHhrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE1NTQ0MzIsImV4cCI6MjA3NzEzMDQzMn0.RPIClQMK14sVlNhmXji8YVO1hGp4Cnt3lwqrW4ym7xA';
   const tableName = 'library_usage';
-  
 
   const loader = document.getElementById("loader");
   const insightListEl = document.getElementById("insightList");
-  const studentCount = document.getElementById("studentCount");
-  const totalFine = document.getElementById("totalFine");
-  const bookCount = document.getElementById("bookCount");
-  const popularGenre = document.getElementById("popularGenre");
-  
 
   // --- Fetch all rows (beyond 1000 limit) ---
   async function fetchAllRows() {
@@ -26,7 +20,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     let moreData = true;
 
     while (moreData) {
-      const res = await fetch(`${supabaseUrl}/rest/v1/${tableName}?select=Student_ID,Department,Category,Year,Fine_Amount,Days_Borrowed,Book_Title,Rating`, {
+      const res = await fetch(`${supabaseUrl}/rest/v1/${tableName}?select=Student_ID,Department,Category,Year,Fine_Amount,Days_Borrowed`, {
         headers: {
           apikey: supabaseKey,
           Authorization: `Bearer ${supabaseKey}`,
@@ -45,10 +39,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     localStorage.setItem("libraryData", JSON.stringify(allData));
     return allData;
   }
-
- 
-
-
 
   // --- INSIGHTS SECTION ---
   function generateInsights(avgFineDept, booksByCategory, avgDaysByYear) {
@@ -101,54 +91,11 @@ document.addEventListener("DOMContentLoaded", async () => {
       loader.style.display = "none";
       console.log(`✅ Loaded ${data.length} records.`);
       createCharts(data);
-     
     } catch (err) {
       loader.innerText = "❌ Failed to load data.";
       console.error(err);
     }
   }
-
-
-   //cards
-  function showSummary(data) {
-    // 1️⃣ Total Students
-    if (studentCount) studentCount.textContent = data.length;
-
-    // 2️⃣ Total Fine
-    
-      const fine = data.reduce((sum, s) => sum + (parseFloat(s.Fine_Amount) || 0), 0);
-      totalFine.textContent = `₹${fine.toFixed(2)}`;
-
-    // 3️⃣ Total Books
-    if (bookCount) {
-      const uniqueBooks = [...new Set(data.map(s => s.Book_Title))];
-      bookCount.textContent = uniqueBooks.length;
-    }
-
-    // 4️⃣ Most Popular Genre (highest average rating)
-    if (popularGenre) {
-      const genreRatings = {};
-      data.forEach(s => {
-        if (!genreRatings[s.Category]) genreRatings[s.Category] = [];
-        genreRatings[s.Category].push(parseFloat(s.Rating) || 0);
-      });
-
-      let topGenre = "";
-      let topRating = -1;
-      for (const [genre, ratings] of Object.entries(genreRatings)) {
-        const avg = ratings.reduce((a, b) => a + b, 0) / ratings.length;
-        if (avg > topRating) {
-          topGenre = genre;
-          topRating = avg;
-        }
-      }
-
-      popularGenre.innerText = topGenre || "N/A";
-    }
-  }
-
-
- 
 
   // --- Chart Function ---
   function createCharts(data) {
@@ -318,12 +265,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // ✅ Finally, generate insights summary
     generateInsights(avgFineDept, booksByCategory, avgDaysByYear);
-    showSummary(data)
-   
-    
   }
-
-  
 
   // 🚀 Run
   init();
