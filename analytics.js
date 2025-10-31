@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     let moreData = true;
 
     while (moreData) {
-      const res = await fetch(`${supabaseUrl}/rest/v1/${tableName}?select=Student_ID,Department,Category,Book_Title,Year,Fine_Amount,Rating,Days_Borrowed`, {
+      const res = await fetch(`${supabaseUrl}/rest/v1/${tableName}?select=Student_ID,Department,Category,BookID,Book_Title,Year,Fine_Amount,Rating,Days_Borrowed`, {
         headers: {
           apikey: supabaseKey,
           Authorization: `Bearer ${supabaseKey}`,
@@ -113,7 +113,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         studentCount.textContent = data.length;
         const fine = data.reduce((sum, s) => sum + (parseFloat(s.Fine_Amount) || 0), 0);
         totalFine.textContent = `₹${fine.toFixed(2)}`;
-        const uniqueBooks = [...new Set(data.map(s => s.Book_Title))];
+        const uniqueBooks = [...new Set(data.map(s => s.Book_ID))];
         bookCount.textContent = uniqueBooks.length;
 
         const genreRatings = {};
