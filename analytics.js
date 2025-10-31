@@ -113,7 +113,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         studentCount.textContent = data.length;
         const fine = data.reduce((sum, s) => sum + (parseFloat(s.Fine_Amount) || 0), 0);
         totalFine.textContent = `₹${fine.toFixed(2)}`;
-        const uniqueBooks = [...new Set(data.map(s => s.Book_ID))];
+        let uniqueBooks = [...new Set(data.map(s => s.Book_ID))];
         bookCount.textContent = uniqueBooks.length;
 
         const genreRatings = {};
@@ -304,7 +304,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // ✅ Finally, generate insights summary
     generateInsights(avgFineDept, booksByCategory, avgDaysByYear);
-    showSummary(data)
+    showSummary(data);
    
     
   }
