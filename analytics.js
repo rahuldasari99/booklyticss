@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     let moreData = true;
 
     while (moreData) {
-      const res = await fetch(`${supabaseUrl}/rest/v1/${tableName}?select=Student_ID,Department,Category,Year,Fine_Amount,Days_Borrowed`, {
+      const res = await fetch(`${supabaseUrl}/rest/v1/${tableName}?select=Student_ID,Department,Book_Title,Category,Year,Fine_Amount,Days_Borrowed,Rating`, {
         headers: {
           apikey: supabaseKey,
           Authorization: `Bearer ${supabaseKey}`,
@@ -317,7 +317,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // ✅ Finally, generate insights summary
     generateInsights(avgFineDept, booksByCategory, avgDaysByYear);
-    showSummary(data)
+    showSummary(data);
    
     
   }
