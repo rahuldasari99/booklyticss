@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const tableName = 'library_usage';
 
   // DOM elements
-  const loader = document.getElementById("loader");
+ 
   const studentnameele = document.getElementById("ustudentname");
   const searchForm = document.getElementById("searchForm");
   const studentCount = document.getElementById("studentCount");
@@ -52,9 +52,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   // --- Main fetch function ---
   async function fetchStudentData() {
     try {
-        loader.innerText = "Loading data from database...";
+       
       const data = await fetchAllRowsParallel();
-       loader.style.display = "none";
+    
       allStudents = data;
       populateFilters(allStudents);
       renderTable(allStudents);
