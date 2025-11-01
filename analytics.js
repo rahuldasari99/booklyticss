@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     let moreData = true;
 
     while (moreData) {
-      const res = await fetch(`${supabaseUrl}/rest/v1/${tableName}?select=Student_ID,Department,Category,BookID,Book_Title,Year,Fine_Amount,Rating,Days_Borrowed`, {
+      const res = await fetch(`${supabaseUrl}/rest/v1/${tableName}?select=Student_ID,Department,Category,Year,Fine_Amount,Days_Borrowed`, {
         headers: {
           apikey: supabaseKey,
           Authorization: `Bearer ${supabaseKey}`,
@@ -101,7 +101,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       loader.style.display = "none";
       console.log(`✅ Loaded ${data.length} records.`);
       createCharts(data);
-      showSummary(data);
     } catch (err) {
       loader.innerText = "❌ Failed to load data.";
       console.error(err);
@@ -110,29 +109,42 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
    //cards
-   function showSummary(data) {
-        studentCount.textContent = data.length;
-        const fine = data.reduce((sum, s) => sum + (parseFloat(s.Fine_Amount) || 0), 0);
-        totalFine.textContent = `₹${fine.toFixed(2)}`;
-        let uniqueBooks = [...new Set(data.map(s => s.Book_ID))];
-        bookCount.textContent = uniqueBooks.length;
+  function showSummary(data) {
+    // 1️⃣ Total Students
+    if (studentCount) studentCount.textContent = data.length;
 
-        const genreRatings = {};
-        data.forEach(s => {
-          if (!genreRatings[s.Category]) genreRatings[s.Category] = [];
-          genreRatings[s.Category].push(parseFloat(s.Rating) || 0);
-        });
+    // 2️⃣ Total Fine
+    
+      const fine = data.reduce((sum, s) => sum + (parseFloat(s.Fine_Amount) || 0), 0);
+      totalFine.textContent = `₹${fine.toFixed(2)}`;
 
-        let topGenre = "N/A", topRating = -1;
-        for (const [genre, ratings] of Object.entries(genreRatings)) {
-          const avg = ratings.reduce((a,b)=>a+b,0)/ratings.length;
-          if (avg > topRating) {
-            topGenre = genre;
-            topRating = avg;
-          }
+    // 3️⃣ Total Books
+    if (bookCount) {
+      const uniqueBooks = [...new Set(data.map(s => s.Book_Title))];
+      bookCount.textContent = uniqueBooks.length;
+    }
+
+    // 4️⃣ Most Popular Genre (highest average rating)
+    if (popularGenre) {
+      const genreRatings = {};
+      data.forEach(s => {
+        if (!genreRatings[s.Category]) genreRatings[s.Category] = [];
+        genreRatings[s.Category].push(parseFloat(s.Rating) || 0);
+      });
+
+      let topGenre = "";
+      let topRating = -1;
+      for (const [genre, ratings] of Object.entries(genreRatings)) {
+        const avg = ratings.reduce((a, b) => a + b, 0) / ratings.length;
+        if (avg > topRating) {
+          topGenre = genre;
+          topRating = avg;
         }
-        popularGenre.innerText = topGenre || "N/A";
       }
+
+      popularGenre.innerText = topGenre || "N/A";
+    }
+  }
 
 
  
@@ -305,7 +317,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // ✅ Finally, generate insights summary
     generateInsights(avgFineDept, booksByCategory, avgDaysByYear);
-    showSummary(data);
+    showSummary(data)
    
     
   }
