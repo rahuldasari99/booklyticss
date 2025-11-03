@@ -51,18 +51,36 @@ const loader = document.getElementById("loader");
 
   // --- Main fetch function ---
   async function fetchStudentData() {
-    try {
-        loader.innerText = "Fetching data from Supabase...";
-      const data = await fetchAllRowsParallel();
-    loader.style.display = "none";
-      allStudents = data;
+  try {
+    // ✅ Check cache first
+    const cachedData = localStorage.getItem("libraryData");
+    if (cachedData) {
+      console.log("✅ Loaded data from cache");
+      allStudents = JSON.parse(cachedData);
       populateFilters(allStudents);
       renderTable(allStudents);
-      console.log(`✅ Loaded ${allStudents.length} records.`);
-    } catch (err) {
-      console.error("Error loading data:", err);
+      loader.style.display = "none";
+      return;
     }
+
+    // 🌀 Otherwise, fetch from Supabase (first load only)
+    loader.innerText = "Fetching data from Supabase...";
+    const data = await fetchAllRowsParallel();
+    loader.style.display = "none";
+    allStudents = data;
+
+    // ✅ Store in cache for next time
+    localStorage.setItem("libraryData", JSON.stringify(allStudents));
+
+    populateFilters(allStudents);
+    renderTable(allStudents);
+    console.log(`✅ Loaded ${allStudents.length} records from Supabase.`);
+  } catch (err) {
+    console.error("❌ Error loading data:", err);
+    loader.innerText = "❌ Failed to load data.";
   }
+}
+
   // async function init() {
   //   try {
   //     loader.innerText = "Fetching data from Supabase...";
@@ -211,4 +229,8 @@ const loader = document.getElementById("loader");
 function logout() {
   localStorage.removeItem('adminData');
   window.location.href = 'index.html';
+}
+function refreshData() {
+  localStorage.removeItem("libraryData");
+  location.reload();
 }
