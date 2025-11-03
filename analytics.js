@@ -328,3 +328,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // 🚀 Run
   init();
 });
+function logout() {
+  localStorage.removeItem('adminData');
+  window.location.href = 'index.html';
+}
