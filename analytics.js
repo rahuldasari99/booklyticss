@@ -101,6 +101,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       loader.style.display = "none";
       console.log(`✅ Loaded ${data.length} records.`);
       createCharts(data);
+      console.log(data);
     } catch (err) {
       loader.innerText = "❌ Failed to load data.";
       console.error(err);
