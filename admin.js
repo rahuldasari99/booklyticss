@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const searchForm = document.getElementById("searchForm");
   const studentCount = document.getElementById("studentCount");
   const fineCount = document.getElementById("totalFine");
-
+const loader = document.getElementById("loader");
   const departmentFilter = document.getElementById("departmentFilter");
   const yearFilter = document.getElementById("yearFilter");
   const categoryFilter = document.getElementById("categoryFilter");
@@ -52,9 +52,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   // --- Main fetch function ---
   async function fetchStudentData() {
     try {
-       
+        loader.innerText = "Fetching data from Supabase...";
       const data = await fetchAllRowsParallel();
-    
+    loader.style.display = "none";
       allStudents = data;
       populateFilters(allStudents);
       renderTable(allStudents);
