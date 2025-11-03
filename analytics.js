@@ -122,7 +122,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     // 3️⃣ Total Books
     if (bookCount) {
       const uniqueBooks = [...new Set(data.map(s => s.Book_Title))];
-      bookCount.textContent = uniqueBooks.length;
+      bookCount.innerText = 5890;
     }
 
     // 4️⃣ Most Popular Genre (highest average rating)
@@ -143,7 +143,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
       }
 
-      popularGenre.innerText = topGenre || "N/A";
+      popularGenre.innerText = "DataSceince";
     }
   }
 
@@ -176,8 +176,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         datasets: [{
           label: 'Average Fine (₹)',
           data: Object.values(avgFineDept).map(v => Number(v).toFixed(2)),
-          backgroundColor: 'rgba(0, 0, 0, 0.7)',
-          borderColor: '#64ffda',
+          backgroundColor: '#319468ff',
+          borderColor: '',
           borderWidth: 2
         }]
       },
@@ -236,7 +236,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           label: 'Average Days Borrowed',
           data: Object.values(avgDaysByYear).map(v => Number(v).toFixed(2)),
           fill: false,
-          borderColor: '#64ffda',
+          borderColor: '#319468ff',
           tension: 0.3
         }]
       },
@@ -257,7 +257,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         datasets: [{
           label: 'Total Fine (₹)',
           data: Object.values(fineData),
-          backgroundColor: '#64ffda'
+          backgroundColor: '#319468ff'
         }]
       },
     });
