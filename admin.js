@@ -64,7 +64,7 @@ const loader = document.getElementById("loader");
     }
 
     // 🌀 Otherwise, fetch from Supabase (first load only)
-    loader.innerText = "Fetching data from Supabase...";
+    loader.innerText = "Fetching data from Database...";
     const data = await fetchAllRowsParallel();
     loader.style.display = "none";
     allStudents = data;
