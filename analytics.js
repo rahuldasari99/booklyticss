@@ -73,12 +73,12 @@ document.addEventListener("DOMContentLoaded", async () => {
       : ["N/A", 0];
 
     const insights = [
-      ` The highest average fine is in <b>${highestFineDept[0]}</b> Department (~₹${Number(highestFineDept[1] || 0).toFixed(2)}).`,
-      ` The lowest average fine is in <b>${lowestFineDept[0]}</b> Department (~₹${Number(lowestFineDept[1] || 0).toFixed(2)}).`,
-      ` The most borrowed category is <b>${topCategory[0]}</b> with <b>${topCategory[1]}</b> books borrowed.`,
-      ` The longest borrowing duration on average is in <b>${longestYear[0]} Year</b> (~${Number(longestYear[1] || 0).toFixed(1)} days).`,
-      ` Borrow duration tends to increase for senior students, possibly due to heavier workloads.`,
-      ` Suggestion: Provide longer borrow periods or reminder systems for <b>${longestYear[0]}</b>-year students to minimize fines.`
+      `💰 The highest average fine is in <b>${highestFineDept[0]}</b> Department (~₹${Number(highestFineDept[1] || 0).toFixed(2)}).`,
+      `🪙 The lowest average fine is in <b>${lowestFineDept[0]}</b> Department (~₹${Number(lowestFineDept[1] || 0).toFixed(2)}).`,
+      `📚 The most borrowed category is <b>${topCategory[0]}</b> with <b>${topCategory[1]}</b> books borrowed.`,
+      `⏱️ The longest borrowing duration on average is in <b>${longestYear[0]} Year</b> (~${Number(longestYear[1] || 0).toFixed(1)} days).`,
+      `📈 Borrow duration tends to increase for senior students, possibly due to heavier workloads.`,
+      `🧠 Suggestion: Provide longer borrow periods or reminder systems for <b>${longestYear[0]}</b>-year students to minimize fines.`
     ];
 
     insightListEl.innerHTML = "";
@@ -122,7 +122,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     // 3️⃣ Total Books
     if (bookCount) {
       const uniqueBooks = [...new Set(data.map(s => s.Book_Title))];
-      bookCount.innerText = 5890;
+      bookCount.innerText = uniqueBooks.length;
     }
 
     // 4️⃣ Most Popular Genre (highest average rating)
@@ -143,7 +143,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
       }
 
-      popularGenre.innerText = "DataSceince";
+      popularGenre.innerText = topGenre || "N/A";
     }
   }
 
@@ -328,7 +328,3 @@ document.addEventListener("DOMContentLoaded", async () => {
   // 🚀 Run
   init();
 });
-function logout() {
-  localStorage.removeItem('adminData');
-  window.location.href = 'index.html';
-}
